@@ -1,24 +1,48 @@
 /* ============================================================
    Amber Cup — global stylesheet
+   Style: warm minimalist boutique roastery.
 
-   Mobile-first: base styles below target small screens.
-   The @media block at the bottom widens the layout for
-   tablets/desktops.
+   Layout idea: a full-bleed cream page with an espresso-brown
+   footer band. All textures are inline SVG data URIs, so the
+   site still works offline (only fonts + placeholder photos
+   need internet).
+
+   Mobile-first: base styles target small screens; the @media
+   block at the bottom widens the layout for tablets/desktops.
    ============================================================ */
 
 /* --- Design tokens ------------------------------------------ */
 :root {
-  --color-bg: #faf4ea;         /* warm cream */
-  --color-surface: #ffffff;
-  --color-text: #3b2a21;       /* espresso brown */
-  --color-muted: #7a6a5e;
-  --color-accent: #c05f33;     /* terracotta */
-  --color-accent-dark: #9d4b27;
-  --color-border: #e6d9c8;
-  --color-error: #b3402a;
+  --frame: #2b1a0f;          /* deep espresso frame + footer */
+  --cream: #f7efdf;          /* main surface */
+  --cream-soft: #f0e5cd;     /* alternating bands */
+  --kraft: #eadcbc;          /* menu-page paper */
+  --ink: #37281b;            /* body text */
+  --muted: #8a7154;
+  --accent: #b4552a;         /* terracotta */
+  --accent-dark: #8f421f;
+  --line: #ddcba8;
+  --error: #a63a22;
+
+  /* Liquid-glass header */
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* overshoots slightly, like an iOS spring */
+  --glass-bg: rgba(247, 239, 223, 0.6);
+  --glass-edge: rgba(255, 255, 255, 0.6);
 
   --font-heading: "Playfair Display", Georgia, serif;
   --font-body: "Nunito Sans", Arial, sans-serif;
+
+  /* Fine grain, laid over every cream/brown surface */
+  --tex-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+
+  /* Rougher grain for the kraft-paper menu */
+  --tex-grain-rough: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23r)' opacity='0.16'/%3E%3C/svg%3E");
+
+  /* Row of three beans — section divider */
+  --tex-beans-row: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='30' viewBox='0 0 140 30'%3E%3Cg fill='none' stroke='%2337281b' stroke-width='1.7' opacity='0.55'%3E%3Cg transform='translate(25 15) rotate(-18)'%3E%3Cellipse rx='11' ry='7'/%3E%3Cpath d='M-9 0 Q -4 -5.5 0 0 Q 4 5.5 9 0'/%3E%3C/g%3E%3Cg transform='translate(70 15) rotate(8) scale(1.15)'%3E%3Cellipse rx='11' ry='7'/%3E%3Cpath d='M-9 0 Q -4 -5.5 0 0 Q 4 5.5 9 0'/%3E%3C/g%3E%3Cg transform='translate(115 15) rotate(24)'%3E%3Cellipse rx='11' ry='7'/%3E%3Cpath d='M-9 0 Q -4 -5.5 0 0 Q 4 5.5 9 0'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+
+  /* Scattered beans — footer wallpaper */
+  --tex-beans-scatter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='none' stroke='%23f7efdf' stroke-width='1.5' opacity='0.09'%3E%3Cg transform='translate(38 38) rotate(-25)'%3E%3Cellipse rx='12' ry='7.5'/%3E%3Cpath d='M-10 0 Q -4 -6 0 0 Q 4 6 10 0'/%3E%3C/g%3E%3Cg transform='translate(112 88) rotate(20)'%3E%3Cellipse rx='12' ry='7.5'/%3E%3Cpath d='M-10 0 Q -4 -6 0 0 Q 4 6 10 0'/%3E%3C/g%3E%3Cg transform='translate(58 128) rotate(70)'%3E%3Cellipse rx='10' ry='6.5'/%3E%3Cpath d='M-8 0 Q -3 -5 0 0 Q 3 5 8 0'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 /* --- Reset / base -------------------------------------------- */
@@ -31,8 +55,9 @@
 
 body {
   font-family: var(--font-body);
-  color: var(--color-text);
-  background-color: var(--color-bg);
+  color: var(--ink);
+  background-color: var(--frame);
+  background-image: var(--tex-grain);
   line-height: 1.6;
 }
 
@@ -42,24 +67,32 @@ h1, h2, h3 {
   line-height: 1.2;
 }
 
-img {
-  max-width: 100%;
+img { max-width: 100%; }
+
+::selection {
+  background-color: var(--accent);
+  color: #fff;
 }
 
-[hidden] {
-  display: none !important; /* beats any display rule we add elsewhere */
-}
+[hidden] { display: none !important; }
 
 .container {
   width: min(100% - 2.5rem, 60rem);
   margin-inline: auto;
 }
 
-.narrow {
-  width: min(100% - 2.5rem, 48rem);
+.narrow { width: min(100% - 2.5rem, 48rem); }
+
+/* Small uppercase label used above headings */
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
 }
 
-/* Visually hidden but available to screen readers */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -69,30 +102,81 @@ img {
   white-space: nowrap;
 }
 
-/* --- Header / navigation ------------------------------------- */
+/* --- The cream page panel ------------------------------------- */
+.frame {
+  background-color: var(--cream);
+  background-image: var(--tex-grain);
+}
+
+/* --- Header / navigation -------------------------------------- */
 .site-header {
-  background-color: var(--color-bg);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--line);
   position: sticky;
   top: 0;
-  z-index: 10; /* keep the mobile dropdown above page content */
+  z-index: 10;
+  /* Every state change springs, iPhone "liquid glass" style */
+  transition:
+    top 0.5s var(--spring),
+    margin 0.5s var(--spring),
+    border-radius 0.5s var(--spring),
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-block: 0.9rem;
+  gap: 1rem;
+  padding-block: 1.4rem;
+  transition: padding 0.5s var(--spring);
 }
+
+/* Once scrolled past a threshold (set in js/script.js), the bar
+   morphs into a floating frosted-glass capsule */
+.site-header.scrolled {
+  top: 10px;
+  margin-inline: 12px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 999px;
+  background-color: var(--glass-bg);
+  -webkit-backdrop-filter: blur(14px) saturate(1.5);
+  backdrop-filter: blur(14px) saturate(1.5);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55), /* specular top edge */
+    0 12px 28px rgba(43, 26, 15, 0.16);
+}
+
+.site-header.scrolled .nav { padding-block: 0.5rem; }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   font-family: var(--font-heading);
-  font-size: 1.4rem;
-  color: var(--color-text);
+  font-size: 1.3rem;
+  color: var(--ink);
   text-decoration: none;
+  transition: font-size 0.5s var(--spring);
 }
 
-/* Hamburger button — shown only on small screens */
+.site-header.scrolled .brand { font-size: 1.1rem; }
+
+/* Users who prefer less motion get instant state changes */
+@media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .nav,
+  .brand {
+    transition: none;
+  }
+}
+
+.brand-mark { color: var(--accent); flex-shrink: 0; }
+
+.nav-note { display: none; }
+
+/* Hamburger button — small screens only */
 .nav-toggle {
   display: flex;
   flex-direction: column;
@@ -106,7 +190,7 @@ img {
 .bar {
   width: 22px;
   height: 2px;
-  background-color: var(--color-text);
+  background-color: var(--ink);
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
@@ -115,19 +199,23 @@ img {
 .nav-toggle.open .bar:nth-child(2) { opacity: 0; }
 .nav-toggle.open .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* Menu list: full-width dropdown on mobile… */
+/* Menu list: floating glass card on mobile… */
 .nav-menu {
   display: none;
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 100%; /* sit just under the sticky header */
+  left: 8px;
+  right: 8px;
+  top: calc(100% + 8px);
   flex-direction: column;
   gap: 0.25rem;
   list-style: none;
   padding: 1rem 1.25rem;
-  background-color: var(--color-bg);
-  border-bottom: 1px solid var(--color-border);
+  background-color: rgba(247, 239, 223, 0.92);
+  -webkit-backdrop-filter: blur(14px) saturate(1.5);
+  backdrop-filter: blur(14px) saturate(1.5);
+  border: 1px solid var(--glass-edge);
+  border-radius: 18px;
+  box-shadow: 0 18px 32px rgba(43, 26, 15, 0.18);
 }
 
 .nav-menu.open { display: flex; }
@@ -135,24 +223,28 @@ img {
 .nav-menu a {
   display: block;
   padding: 0.5rem 0;
-  color: var(--color-text);
+  color: var(--ink);
   text-decoration: none;
-  font-weight: 600;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 .nav-menu a:hover,
-.nav-menu a.active { color: var(--color-accent); }
+.nav-menu a.active { color: var(--accent); }
 
-/* --- Buttons -------------------------------------------------- */
+/* --- Buttons --------------------------------------------------- */
 .btn {
   display: inline-block;
-  padding: 0.75rem 1.6rem;
-  background-color: var(--color-accent);
+  padding: 0.75rem 1.7rem;
+  background-color: var(--accent);
   color: #fff;
   font-family: var(--font-body);
-  font-size: 1rem;
-  font-weight: 600;
-  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   text-decoration: none;
   border: none;
   border-radius: 999px;
@@ -160,114 +252,268 @@ img {
   transition: background-color 0.15s ease;
 }
 
-.btn:hover { background-color: var(--color-accent-dark); }
+.btn:hover { background-color: var(--accent-dark); }
 
-/* --- Hero (home) ---------------------------------------------- */
-.hero {
-  /* Placeholder photo with a dark overlay so white text stays readable */
-  background-image:
-    linear-gradient(rgba(43, 28, 20, 0.55), rgba(43, 28, 20, 0.55)),
-    url("https://picsum.photos/seed/ambercup-hero/1600/900");
-  background-size: cover;
-  background-position: center;
-  color: #fff;
-  text-align: center;
-  padding-block: 6rem;
+/* Light variant for use on top of photos */
+.btn-light {
+  background-color: var(--cream);
+  color: var(--ink);
 }
+
+.btn-light:hover { background-color: #fff; }
+
+/* --- Hero (home) ------------------------------------------------ */
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: clamp(420px, 68vh, 620px);
+  display: flex;
+  align-items: flex-end; /* headline sits at the bottom, like the inspo */
+  color: var(--cream);
+}
+
+/* Photo layer, warmed up to match the palette */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("https://picsum.photos/seed/ambercup-hero/1600/1000") center / cover no-repeat;
+  filter: sepia(0.35) saturate(1.15) brightness(0.9);
+}
+
+/* Brown gradient so the text stays readable */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(43, 26, 15, 0.2), rgba(43, 26, 15, 0.65));
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  padding-block: 3rem;
+}
+
+.hero-eyebrow { color: rgba(247, 239, 223, 0.85); }
 
 .hero h1 {
-  font-size: clamp(2.6rem, 8vw, 4.25rem);
+  font-size: clamp(2.5rem, 7vw, 4.3rem);
+  max-width: 14ch;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
 }
 
-.tagline {
-  max-width: 36ch;
-  margin: 1rem auto 2rem;
-  font-size: 1.15rem;
+/* --- Bean divider ------------------------------------------------ */
+.bean-divider {
+  width: 140px;
+  height: 30px;
+  margin: 1.5rem auto;
+  background: var(--tex-beans-row) center / contain no-repeat;
 }
 
-/* --- About / Hours (home) ------------------------------------- */
-.about,
-.hours {
-  padding-block: 3rem;
+/* --- About (home) ------------------------------------------------- */
+.about {
+  padding-block: 3rem 1.5rem;
 }
 
 .about img {
   display: block;
   width: 100%;
-  border-radius: 12px;
+  /* Arched top — the boutique-cafe look */
+  border-radius: 999px 999px 14px 14px;
+  filter: sepia(0.25) saturate(1.1);
 }
 
-.about p {
-  margin-top: 0.75rem;
-  max-width: 60ch;
+.about-text { margin-top: 2rem; }
+
+.about-text h2 { font-size: clamp(1.7rem, 4vw, 2.3rem); margin-bottom: 0.75rem; }
+
+.about-text p:not(.eyebrow) { max-width: 52ch; }
+
+/* --- Photo banner (home) ------------------------------------------- */
+.banner {
+  position: relative;
+  overflow: hidden;
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--cream);
+  margin-block: 1.5rem 0;
 }
 
-.hours h2 { margin-bottom: 0.75rem; }
+.banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("https://picsum.photos/seed/ambercup-roast/1600/700") center / cover no-repeat;
+  filter: sepia(0.4) saturate(1.1) brightness(0.85);
+}
+
+.banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(43, 26, 15, 0.45);
+}
+
+.banner .container {
+  position: relative;
+  z-index: 1;
+  padding-block: 3rem;
+}
+
+.banner-quote {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  margin-bottom: 0.5rem;
+}
+
+.banner-sub {
+  font-size: 0.95rem;
+  color: rgba(247, 239, 223, 0.85);
+}
+
+/* --- Hours (home) ---------------------------------------------------- */
+.hours {
+  background-color: var(--cream-soft);
+  background-image: var(--tex-grain);
+  border-top: 1px solid var(--line);
+  padding-block: 3rem;
+  margin-top: 2.5rem;
+}
+
+.hours h2 { font-size: clamp(1.7rem, 4vw, 2.3rem); margin-bottom: 1rem; }
 
 .hours-list > div {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid var(--color-border);
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--line);
 }
 
-/* --- Page intro (menu, contact) -------------------------------- */
+.hours-list dt { font-weight: 600; }
+
+.hours-list dd { color: var(--muted); }
+
+.hours-note {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.hours-note h3 { font-size: 1.15rem; margin-bottom: 0.4rem; }
+
+/* --- Page intro (menu, contact) --------------------------------------- */
 .page-intro {
-  padding-block: 3rem 1rem;
+  padding-block: 3rem 0.5rem;
   text-align: center;
 }
 
-.page-intro p {
-  color: var(--color-muted);
+.intro-note { color: var(--muted); }
+
+/* --- Menu page: the kraft-paper sheet ---------------------------------- */
+.paper {
+  background-color: var(--kraft);
+  background-image: var(--tex-grain-rough);
+  /* Aged, uneven edges via an inner shadow */
+  box-shadow: inset 0 0 80px rgba(56, 39, 26, 0.25);
+  padding-block: 2.5rem 4rem;
 }
 
-/* --- Menu page -------------------------------------------------- */
-.menu-category {
-  padding-block: 1.25rem;
+.paper h1 { font-size: clamp(2.3rem, 6vw, 3.4rem); }
+
+/* Ink-stamp badge */
+.stamp {
+  display: inline-block;
+  margin-top: 1.25rem;
+  padding: 0.45rem 0.9rem;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+  color: var(--accent);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  transform: rotate(-4deg);
+  opacity: 0.8;
 }
 
-.menu-category h2 { margin-bottom: 1rem; }
+/* Category heading with printed rules either side */
+.menu-category h2 {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  font-size: 1.6rem;
+  margin-block: 2.25rem 0.75rem;
+}
 
+.menu-category h2::before,
+.menu-category h2::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(55, 40, 27, 0.35);
+}
+
+/* Flat printed list with dotted leaders (name .... price) */
 .menu-list {
   list-style: none;
   padding: 0;
-  display: grid;
-  gap: 1rem;
+  max-width: 42rem;
+  margin-inline: auto;
 }
 
 .menu-item {
   display: flex;
-  justify-content: space-between;
   align-items: baseline;
-  gap: 1rem;
-  padding: 1rem 1.25rem;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
+  padding-block: 0.85rem;
 }
 
-.menu-item-info h3 { font-size: 1.05rem; }
+.menu-item-info { order: 1; }
+
+/* The dotted leader, created purely in CSS between name and price */
+.menu-item::after {
+  content: "";
+  order: 2;
+  flex: 1;
+  min-width: 2rem;
+  margin-inline: 0.75rem;
+  border-bottom: 2px dotted rgba(86, 62, 40, 0.5);
+}
+
+.menu-item-info h3 { font-size: 1.08rem; }
 
 .menu-item-info p {
-  color: var(--color-muted);
-  font-size: 0.95rem;
+  color: var(--muted);
+  font-size: 0.92rem;
 }
 
 .price {
+  order: 3;
+  font-family: var(--font-heading);
   font-weight: 700;
-  color: var(--color-accent);
+  color: var(--accent-dark);
   white-space: nowrap;
 }
 
-/* --- Contact page ------------------------------------------------ */
+/* --- Contact page ------------------------------------------------------- */
+.contact-grid { padding-block: 1rem 3rem; }
+
+.contact-details h2,
+.contact-form-section h2 { font-size: 1.4rem; margin-bottom: 0.75rem; }
+
 .contact-details address {
   font-style: normal;
   line-height: 2;
   margin-bottom: 1rem;
 }
 
-.contact-details a { color: var(--color-accent); }
+.contact-details a { color: var(--accent); }
 
 .form-group {
   display: flex;
@@ -281,73 +527,151 @@ img {
 .form-group input,
 .form-group textarea {
   font: inherit;
-  color: var(--color-text);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  color: var(--ink);
+  background-color: #fffdf6;
+  border: 1px solid var(--line);
   border-radius: 8px;
   padding: 0.65rem 0.8rem;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
 .error-message {
   min-height: 1.2em;   /* reserve a line so layout doesn't jump */
-  color: var(--color-error);
+  color: var(--error);
 }
 
 .form-group.invalid input,
 .form-group.invalid textarea {
-  border-color: var(--color-error);
+  border-color: var(--error);
 }
 
 .form-success {
   padding: 1.5rem;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-left: 4px solid var(--color-accent);
+  background-color: var(--cream-soft);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
   border-radius: 12px;
 }
 
-/* --- Footer -------------------------------------------------------- */
+/* --- Footer -------------------------------------------------------------- */
 .site-footer {
-  margin-top: 2rem;
-  padding-block: 1.5rem;
-  text-align: center;
-  color: var(--color-muted);
-  font-size: 0.9rem;
-  border-top: 1px solid var(--color-border);
+  background-color: var(--frame);
+  background-image: var(--tex-beans-scatter), var(--tex-grain);
+  color: var(--cream);
+  padding-top: 3rem;
 }
 
-/* --- Tablet / desktop ----------------------------------------------- */
+.site-footer h2 {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #d98d5f;
+  margin-bottom: 0.5rem;
+}
+
+.site-footer p:not(.footer-brand):not(.footer-copy) {
+  color: rgba(247, 239, 223, 0.8);
+}
+
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  color: var(--cream);
+}
+
+.footer-brand .brand-mark { color: #d98d5f; }
+
+.footer-blurb {
+  max-width: 30ch;
+  margin-top: 0.5rem;
+  font-size: 0.92rem;
+}
+
+.footer-copy {
+  margin-top: 2.5rem;
+  padding-block: 1.25rem;
+  border-top: 1px solid rgba(247, 239, 223, 0.14);
+  text-align: center;
+  font-size: 0.8rem;
+  color: rgba(247, 239, 223, 0.55);
+}
+
+/* --- Tablet / desktop ------------------------------------------------------ */
 @media (min-width: 700px) {
   .nav-toggle { display: none; }
 
-  /* Nav becomes a plain inline row again */
+  /* Three-part nav: links | centered brand | note — like the inspo */
+  .nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 2rem;
+  }
+
   .nav-menu {
     display: flex;
     position: static;
     flex-direction: row;
-    gap: 1.75rem;
+    gap: 2.2rem;
+    grid-column: 1;
+    grid-row: 1;
     padding: 0;
-    border-bottom: none;
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   .nav-menu a { padding: 0; }
 
+  .brand { grid-column: 2; grid-row: 1; }
+
+  .nav-note {
+    display: block;
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
   .about {
     display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 2rem;
+    grid-template-columns: 340px 1fr;
+    gap: 3rem;
     align-items: center;
   }
 
-  .contact-grid {
+  .about-text { margin-top: 0; }
+
+  .banner { min-height: 320px; }
+
+  .hours-grid {
     display: grid;
-    grid-template-columns: 1fr 1.4fr;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .hours-note { margin-top: 0; }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
     gap: 3rem;
     align-items: start;
   }

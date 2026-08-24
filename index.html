@@ -13,73 +13,129 @@
 </head>
 <body>
 
-  <header class="site-header">
-    <nav class="nav container" aria-label="Main navigation">
-      <a href="index.html" class="brand">Amber Cup</a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="sr-only">Toggle navigation</span>
-      </button>
-      <ul id="nav-menu" class="nav-menu">
-        <li><a href="index.html" class="active" aria-current="page">Home</a></li>
-        <li><a href="menu.html">Menu</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+  <!-- Brown "frame" around the whole site, like a printed menu cover -->
+  <div class="frame">
 
-  <main>
+    <header class="site-header">
+      <nav class="nav container" aria-label="Main navigation">
+        <ul id="nav-menu" class="nav-menu">
+          <li><a href="index.html" class="active" aria-current="page">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="index.html" class="brand">
+          <svg class="brand-mark" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <g fill="none" stroke="currentColor" stroke-width="1.8" transform="rotate(-25 12 12)">
+              <ellipse cx="12" cy="12" rx="9.5" ry="5.8"/>
+              <path d="M4 12 Q 8 7.5 12 12 Q 16 16.5 20 12"/>
+            </g>
+          </svg>
+          Amber Cup
+        </a>
+        <p class="nav-note">Open daily from 7:00</p>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="sr-only">Toggle navigation</span>
+        </button>
+      </nav>
+    </header>
 
-    <!-- Hero -->
-    <section class="hero">
-      <div class="container">
-        <h1>Amber Cup</h1>
-        <p class="tagline">Small-batch coffee, fresh pastries, and a seat that's always waiting.</p>
-        <a href="menu.html" class="btn">See Menu</a>
+    <main>
+
+      <!-- Hero: warm-graded photo with serif headline, like the inspo shot -->
+      <section class="hero">
+        <div class="container hero-inner">
+          <p class="eyebrow hero-eyebrow">Small-batch roastery &middot; Brewtown</p>
+          <h1>Slow mornings, golden pours.</h1>
+          <a href="menu.html" class="btn btn-light">See Menu</a>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section class="about container">
+        <!-- Placeholder photo (picsum.photos); swap for a real one later -->
+        <img
+          src="https://picsum.photos/seed/ambercup-cafe/560/680"
+          alt="The cozy interior of Amber Cup"
+          width="560" height="680">
+        <div class="about-text">
+          <p class="eyebrow">Our story</p>
+          <h2>A tiny cafe with big mornings</h2>
+          <p>We're a neighborhood roastery first, a cafe second &mdash; every bean is roasted in-house and every pastry comes out of the oven before sunrise. The room is small on purpose: warm light, quiet corners, and baristas who remember your order.</p>
+        </div>
+      </section>
+
+      <div class="bean-divider" aria-hidden="true"></div>
+
+      <!-- Full-width photo strip to break up the page -->
+      <section class="banner">
+        <div class="container">
+          <p class="banner-quote">Roasted in-house, every single week.</p>
+          <p class="banner-sub">From green bean to golden cup &mdash; ask what's in the roaster today.</p>
+        </div>
+      </section>
+
+      <!-- Opening hours -->
+      <section class="hours">
+        <div class="container hours-grid">
+          <div>
+            <p class="eyebrow">Find your moment</p>
+            <h2>Opening hours</h2>
+            <dl class="hours-list">
+              <div>
+                <dt>Monday &ndash; Friday</dt>
+                <dd>7:00 &ndash; 18:00</dd>
+              </div>
+              <div>
+                <dt>Saturday</dt>
+                <dd>8:00 &ndash; 17:00</dd>
+              </div>
+              <div>
+                <dt>Sunday</dt>
+                <dd>8:00 &ndash; 16:00</dd>
+              </div>
+            </dl>
+          </div>
+          <aside class="hours-note">
+            <h3>Good to know</h3>
+            <p>The quiet hour is 7&ndash;8am. Laptops are welcome on weekdays &mdash; weekends are for lingering.</p>
+          </aside>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <p class="footer-brand">
+            <svg class="brand-mark" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <g fill="none" stroke="currentColor" stroke-width="1.8" transform="rotate(-25 12 12)">
+                <ellipse cx="12" cy="12" rx="9.5" ry="5.8"/>
+                <path d="M4 12 Q 8 7.5 12 12 Q 16 16.5 20 12"/>
+              </g>
+            </svg>
+            Amber Cup
+          </p>
+          <p class="footer-blurb">Small-batch coffee, fresh pastries, and a seat that's always waiting.</p>
+        </div>
+        <div>
+          <h2>Visit</h2>
+          <p>42 Bean Street, Brewtown<br>
+          (555) 010-1234</p>
+        </div>
+        <div>
+          <h2>Hours</h2>
+          <p>Mon&ndash;Fri 7:00&ndash;18:00<br>
+          Sat 8:00&ndash;17:00 &middot; Sun 8:00&ndash;16:00</p>
+        </div>
       </div>
-    </section>
+      <p class="footer-copy">&copy; 2026 Amber Cup Cafe</p>
+    </footer>
 
-    <!-- About -->
-    <section class="about container">
-      <!-- Placeholder photo (picsum.photos); swap for a real one later -->
-      <img
-        src="https://picsum.photos/seed/ambercup-cafe/640/480"
-        alt="The cozy interior of Amber Cup"
-        width="640" height="480">
-      <div>
-        <h2>About us</h2>
-        <p>We're a neighborhood cafe roasting our own beans every week and baking pastries fresh each morning. Our space is small on purpose: warm light, quiet corners, and baristas who remember your order.</p>
-      </div>
-    </section>
-
-    <!-- Opening hours -->
-    <section class="hours container">
-      <h2>Opening hours</h2>
-      <dl class="hours-list">
-        <div>
-          <dt>Monday &ndash; Friday</dt>
-          <dd>7:00 &ndash; 18:00</dd>
-        </div>
-        <div>
-          <dt>Saturday</dt>
-          <dd>8:00 &ndash; 17:00</dd>
-        </div>
-        <div>
-          <dt>Sunday</dt>
-          <dd>8:00 &ndash; 16:00</dd>
-        </div>
-      </dl>
-    </section>
-
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <p>&copy; 2026 Amber Cup Cafe &middot; 42 Bean Street, Brewtown &middot; (555) 010-1234</p>
-    </div>
-  </footer>
+  </div>
 
   <script src="js/script.js"></script>
 </body>

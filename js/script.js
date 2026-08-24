@@ -18,6 +18,22 @@ if (navToggle && navMenu) {
   });
 }
 
+// --- Collapsing header ----------------------------------------
+const header = document.querySelector(".site-header");
+
+if (header) {
+  // How far (in px) you must scroll before the header slims down
+  const COLLAPSE_AT = 40;
+
+  function updateHeader() {
+    header.classList.toggle("scrolled", window.scrollY > COLLAPSE_AT);
+  }
+
+  updateHeader(); // handle a page loaded mid-scroll (e.g. refresh)
+  // passive: scroll events fire often; this says we won't block scrolling
+  window.addEventListener("scroll", updateHeader, { passive: true });
+}
+
 // --- Contact form validation ----------------------------------
 const form = document.getElementById("contact-form");
 
