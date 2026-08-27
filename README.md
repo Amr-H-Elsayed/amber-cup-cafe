@@ -13,6 +13,7 @@ You can view the website by clicking the .index file inserted in this repo.
 * Ox Alpha
 * HTML
 * JavaScript
+* CSS
 
 ## 💡 What I Learned
 As my first time using an AI agent, I learned how to:
